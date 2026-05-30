@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Harry Scanlan — SEO Specialist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F5F2EC;
+      --ink: #1A1812;
+      --mid: #6B6455;
+      --accent: #C8471A;
+      --rule: #D8D3C8;
+      --card: #EDEAE2;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.5;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 5rem 0 4rem;
+      border-bottom: 1px solid var(--rule);
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .header-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: end;
+    }
+
+    .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .location {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: var(--mid);
+      margin-top: 1.5rem;
+    }
+
+    .contact-cluster {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .contact-cluster a, .contact-cluster span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--mid);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+
+    .contact-cluster a:hover { color: var(--accent); }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--rule);
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    .about p {
+      font-size: 1.18rem;
+      line-height: 1.75;
+      color: var(--ink);
+      max-width: 640px;
+    }
+
+    .about p strong {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-pill {
+      background: var(--card);
+      border: 1px solid var(--rule);
+      padding: 0.75rem 1.2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .skill-pill::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transition: transform 0.2s;
+    }
+
+    .skill-pill:hover {
+      border-color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    .skill-pill:hover::before { transform: scaleY(1); }
+
+    /* ── CASE STUDIES ── */
+    .cases { display: flex; flex-direction: column; gap: 2rem; }
+
+    .case-card {
+      background: var(--card);
+      border: 1px solid var(--rule);
+      padding: 2rem;
+      position: relative;
+      transition: border-color 0.25s;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .case-card:hover { border-color: var(--accent); }
+
+    .case-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .case-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .case-tag.type { color: var(--accent); }
+
+    .case-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+    }
+
+    .case-card .desc {
+      font-size: 0.92rem;
+      color: var(--mid);
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+    }
+
+    .metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .metric {
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      padding: 0.4rem 0.9rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--ink);
+      letter-spacing: 0.03em;
+    }
+
+    .metric strong {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ── TESTIMONIAL ── */
+    .testimonial {
+      margin-top: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      border-left: 3px solid var(--accent);
+      background: var(--bg);
+    }
+
+    .testimonial p {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .testimonial cite {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-style: normal;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--mid);
+      margin-top: 0.6rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 3rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--mid);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    section { animation: fadeUp 0.7s ease both; }
+    section:nth-child(2) { animation-delay: 0.1s; }
+    section:nth-child(3) { animation-delay: 0.2s; }
+    section:nth-child(4) { animation-delay: 0.3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .header-inner { grid-template-columns: 1fr; }
+      .contact-cluster { align-items: flex-start; }
+      footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div>
+        <p class="eyebrow">SEO Specialist</p>
+        <h1>Harry<br><em>Scanlan</em></h1>
+        <p class="location">◈ Southampton, United Kingdom</p>
+      </div>
+      <div class="contact-cluster">
+        <a href="mailto:">Email</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Phone</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <div class="about">
+    <p>Results-driven SEO specialist with <strong>5+ years of agency experience</strong> managing diverse client portfolios. Expert in identifying technical growth opportunities and translating them into actionable strategies. A unique blend of <strong>deep technical knowledge</strong> — crawlability, site architecture, Core Web Vitals — and client-facing account management. Proven ability to bridge the gap between web developers, content creators, and C-suite stakeholders.</p>
+  </div>
+
+  <!-- SKILLS -->
+  <section>
+    <p class="section-label">Key Skills</p>
+    <div class="skills-grid">
+      <div class="skill-pill">Technical SEO</div>
+      <div class="skill-pill">Crawlability & Indexing</div>
+      <div class="skill-pill">Site Architecture</div>
+      <div class="skill-pill">Core Web Vitals</div>
+      <div class="skill-pill">Google Search Console</div>
+      <div class="skill-pill">On-Page Signals</div>
+      <div class="skill-pill">Local SEO</div>
+      <div class="skill-pill">SEO Auditing</div>
+      <div class="skill-pill">Client Account Mgmt</div>
+      <div class="skill-pill">Stakeholder Comms</div>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section>
+    <p class="section-label">Portfolio Case Studies</p>
+    <div class="cases">
+
+      <!-- Case 1 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-tag type">Local SEO</span>
+          <span class="case-tag">Finance · Feb 2026</span>
+        </div>
+        <h3>Restoring a Business Profile Visibility on Google Maps</h3>
+        <p class="desc">A client's Google Business Profile was incorrectly marked as permanently closed, remaining down for over a week despite multiple support tickets. Full visibility was restored within one hour through targeted profile auditing and strategic signal corrections.</p>
+        <div class="metrics">
+          <div class="metric"><strong>~1 hr</strong> to full restoration</div>
+          <div class="metric"><strong>7+ days</strong> downtime resolved</div>
+          <div class="metric">No further escalation needed</div>
+          <div class="metric">Local & Maps visibility recovered</div>
+        </div>
+        <div class="testimonial">
+          <p>"After over a week of going back and forth with support and getting nowhere, our business profile was finally fixed within an hour. The changes made were simple but clearly strategic and they worked immediately…"</p>
+          <cite>— Director, Think Acquisition</cite>
+        </div>
+      </div>
+
+      <!-- Case 2 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-tag type">Technical SEO</span>
+          <span class="case-tag">Media & Entertainment · Nov 2025</span>
+        </div>
+        <h3>Organic Visibility Recovery After Website Migration</h3>
+        <p class="desc">A national brand's website relaunch caused complete loss of organic visibility — key pages were mistakenly set to noindex, wiping branded search rankings. A focused technical audit identified and resolved the issue, fully restoring brand authority in search.</p>
+        <div class="metrics">
+          <div class="metric"><strong>#2</strong> national ranking restored</div>
+          <div class="metric"><strong>+1,325%</strong> branded impressions</div>
+          <div class="metric">Critical pages reindexed</div>
+          <div class="metric">Full organic recovery</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>Harry Scanlan · SEO Specialist</span>
+    <span>Southampton, UK</span>
+  </footer>
+
+</div>
+</body>
+</html>
